@@ -1,0 +1,14 @@
+solarmax:
+  client:
+    ip: 192.168.1.123
+    port: 12345
+  request:
+  - PAC
+  - TKK
+  - KDY
+  - UL1
+
+pvoutput:
+  host: http://localhost:8080
+  apiKey: some-random-string
+  systemId: some-random-systemId
