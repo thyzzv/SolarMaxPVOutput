@@ -4,6 +4,7 @@ A java (Spring CLI) based tool to monitor a single SolarMax inverter and upload 
 **How to build**
 
 Min requirements: Java 11 and Maven
+
 Build using maven: `mvn clean package`
 
 **How to run**
