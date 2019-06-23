@@ -15,6 +15,9 @@ pvoutput:
   systemId: <your system id>
 ```
 
+Go to the designated folder and run (on a machine running java11 or later:
+`java -jar SolarMaxPVOutput.jar`
+
 Default the client wil look for the SolarMax inverter on `192.168.1.123:12345` you can override these settings by adding the the `application.yml`
 ```yaml
 solrmax:
