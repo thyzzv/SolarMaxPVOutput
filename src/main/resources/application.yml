@@ -8,15 +8,20 @@ solarmax:
    - UL1
   cron: '0 0/5 6-23 * * *'
 
+sma:
+  host: http://192.168.1.17
+  right: usr
+  cron: '0 0/5 6-23 * * *'
+
 pvoutput:
   host: https://pvoutput.org
-  cron: '5 0/2 6-23 * * *'
+  cron: '5 0/1 6-23 * * *'
 
 spring:
   devtools:
     add-properties: false
 
 logging:
-  path: logs
+  path: ./logs
   file: ${logging.path}/solarmax.log
   pattern.file: '%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n'

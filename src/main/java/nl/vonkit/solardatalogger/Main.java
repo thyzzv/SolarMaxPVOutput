@@ -1,4 +1,4 @@
-package nl.vonkit.solarmaxdatalogger;
+package nl.vonkit.solardatalogger;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

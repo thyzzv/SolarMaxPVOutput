@@ -1,8 +1,10 @@
-package nl.vonkit.solarmaxdatalogger.solarmax;
+package nl.vonkit.solardatalogger.solarmax;
+
+import nl.vonkit.solardatalogger.BaseCommand;
 
 import java.util.function.Function;
 
-public enum SolarMaxCommand {
+public enum SolarMaxCommand implements BaseCommand {
     BUILD_NUMBER("BDN"),
     COS_PHI_ABSOLUTE("CPA"),
     COUNTRY_CODE("CYC"),
@@ -16,7 +18,7 @@ public enum SolarMaxCommand {
     ENABLE_DIAGNOSIS("DIAG"),
     ENABLE_ETHERNET("ETH"),
     ENERGY_DAY("KDY", "v1", v -> v / 10f, v -> String.valueOf(Math.round(v * 100))),
-    ENERGY_LAST_DAY("KLD"),
+    ENERGY_LAST_DAY("KLD", "", v -> v / 10f, v -> String.valueOf(Math.round(v * 100))),
     ENERGY_LAST_MONTH("KLM"),
     ENERGY_LAST_YEAR("KLY"),
     ENERGY_MONTH("KMT"),
@@ -63,6 +65,7 @@ public enum SolarMaxCommand {
     MONTH("DMT"),
     NOMINAL_VOLTAGE("RAV"),
     NUMBER_OF_MODULE_STRINGS("MOD"),
+    OPERATING_HOURS("KHR"),
     P_AC_EFF("PAE", null, v -> v / 2f, v -> String.valueOf(Math.round(v / 2f))),
     P_AC("PAC", "v2", v -> v / 2f, v -> String.valueOf(Math.round(v / 2f))),
     PHASE_DIFFERENCE_ANGLE("PFA"),
@@ -139,11 +142,11 @@ public enum SolarMaxCommand {
         return null;
     }
 
-    public String getPVoutputParam() {
+    public String getPvOutputParam() {
         return pvOutputParam;
     }
 
-    public Function<Float, String> getToPVOutputConverter() {
+    public Function<Float, String> getToPvOutputConverter() {
         return toPVOutputConverter;
     }
 

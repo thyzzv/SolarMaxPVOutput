@@ -1,9 +1,8 @@
-package nl.vonkit.solarmaxdatalogger.solarmax;
+package nl.vonkit.solardatalogger.solarmax;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SolarMaxRequest {
     // {(1) + Src(3) + dest(3) + len(2) + |(1) + enconding(3) + body + |(1) + checksum(4) + }(1)

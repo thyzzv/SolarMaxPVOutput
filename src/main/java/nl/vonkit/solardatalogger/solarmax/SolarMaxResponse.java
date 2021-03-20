@@ -1,14 +1,16 @@
-package nl.vonkit.solarmaxdatalogger.solarmax;
+package nl.vonkit.solardatalogger.solarmax;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import nl.vonkit.solardatalogger.BaseCommand;
+import nl.vonkit.solardatalogger.BaseResponse;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 @EqualsAndHashCode
-public class SolarMaxResponse {
+public class SolarMaxResponse implements BaseResponse {
     private static final String messageDelimiter = ";";
     private static final String messagePartDelimiter = "|";
 
@@ -18,7 +20,8 @@ public class SolarMaxResponse {
     private static final String defaultDestination = "00";
 
     private final String fullResponse;
-    private Map<SolarMaxCommand, Float> responseParameters = new HashMap<>();
+    private final String pvOutputSystemId;
+    private Map<BaseCommand, Float> responseParameters = new HashMap<>();
     private LocalDateTime dateTime;
     private boolean processable;
 
@@ -26,8 +29,9 @@ public class SolarMaxResponse {
 //    private final String encoding = "64:";
 
 
-    public SolarMaxResponse(@NonNull String response) {
-        if(response.contains("}")) {
+    public SolarMaxResponse(@NonNull String response, final String pvOutputSystemId) {
+        this.pvOutputSystemId = pvOutputSystemId;
+        if (response.contains("}")) {
             this.fullResponse = response.substring(0, response.indexOf('}'));
             parse();
         } else {
@@ -54,15 +58,15 @@ public class SolarMaxResponse {
         processable = true;
     }
 
-    public Map<SolarMaxCommand, Float> getResponseValues() {
+    public Map<BaseCommand, Float> getResponseValues() {
         if (processable) {
             return responseParameters;
         }
         return null;
     }
 
-    public static SolarMaxResponse from(final char[] charbuffer) {
-        return new SolarMaxResponse(new String(charbuffer));
+    public static SolarMaxResponse from(final char[] charbuffer, String pvOutputSystemId) {
+        return new SolarMaxResponse(new String(charbuffer), pvOutputSystemId);
     }
 
     @Override
@@ -75,17 +79,13 @@ public class SolarMaxResponse {
                 '}';
     }
 
-    private Map<SolarMaxCommand, String> getHumanResponseValues() {
-        final Map<SolarMaxCommand, String> map = new HashMap<>();
-        responseParameters.forEach((key, value) -> {
-            final float convertedValue = key.getToHumanConverter().apply(value);
-            final String strValue = (convertedValue % 1.0 != 0) ? String.format("%s", convertedValue) : String.format("%.00f", convertedValue);
-            map.put(key, strValue);
-        });
-        return map;
-    }
-
+    @Override
     public LocalDateTime getDateTime() {
         return dateTime;
+    }
+
+    @Override
+    public String getSystemId() {
+        return pvOutputSystemId;
     }
 }

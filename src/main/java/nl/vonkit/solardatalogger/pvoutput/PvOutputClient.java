@@ -1,4 +1,4 @@
-package nl.vonkit.solarmaxdatalogger.pvoutput;
+package nl.vonkit.solardatalogger.pvoutput;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -13,21 +13,21 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class PVOutputClient {
+public class PvOutputClient {
     private final static String STATUS_ENDPOINT = "/service/r2/addstatus.jsp";
-    private final PVOutputConfig config;
+    private final PvOutputConfig config;
 
-    public PVOutputClient(PVOutputConfig config) {
+    public PvOutputClient(PvOutputConfig config) {
         this.config = config;
         log.info("Starting with:  {} ", config);
     }
 
-    public void postStatus(PVOutputRequest request) {
+    public void postStatus(PvOutputRequest request) {
         var restTemplate = new RestTemplate();
         var fooResourceUrl = String.format("%s%s", config.getHost(), STATUS_ENDPOINT);
         var headers = new HttpHeaders();
         headers.add("X-Pvoutput-Apikey", config.getApiKey());
-        headers.add("X-Pvoutput-SystemId", config.getSystemId());
+        headers.add("X-Pvoutput-SystemId", request.getSystemId());
         headers.setAccept(List.of(MediaType.TEXT_PLAIN));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 

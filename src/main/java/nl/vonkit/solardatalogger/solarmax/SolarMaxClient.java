@@ -1,7 +1,6 @@
-package nl.vonkit.solarmaxdatalogger.solarmax;
+package nl.vonkit.solardatalogger.solarmax;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -12,7 +11,6 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 @Component
 @Slf4j
@@ -25,7 +23,8 @@ public class SolarMaxClient {
 
     }
 
-    public Optional<SolarMaxResponse> request(SolarMaxRequest request) {
+    public Optional<SolarMaxResponse> request() {
+        SolarMaxRequest request = new SolarMaxRequest(config.getRequest());
         Optional<SolarMaxResponse> response;
         try (Socket socket = createSocket()) {
             log.info("Executing request {}", request);
@@ -40,7 +39,7 @@ public class SolarMaxClient {
             char[] responseBuffer = new char[1024];
             int read = in.read(responseBuffer);
             log.info("response read {} characters", read);
-            response = Optional.of(SolarMaxResponse.from(Arrays.copyOfRange(responseBuffer, 0, read)));
+            response = Optional.of(SolarMaxResponse.from(Arrays.copyOfRange(responseBuffer, 0, read), config.getPvOutputSystemId()));
         } catch (SocketTimeoutException e) {
             //timeout is ok (solar max is not longer available)
             response = Optional.empty();

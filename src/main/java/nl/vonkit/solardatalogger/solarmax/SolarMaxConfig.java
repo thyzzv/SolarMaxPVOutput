@@ -1,4 +1,4 @@
-package nl.vonkit.solarmaxdatalogger.pvoutput;
+package nl.vonkit.solardatalogger.solarmax;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,17 +8,21 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-@ConfigurationProperties("pvoutput")
+@ConfigurationProperties("solarmax")
 @Validated
-public class PVOutputConfig {
+public class SolarMaxConfig {
     @NonNull
-    private String host;
+    private List<String> request;
     @NonNull
-    private String apiKey;
+    private String clientIp;
     @NonNull
-    private String systemId;
+    private int clientPort;
+    @NonNull
+    private String pvOutputSystemId;
 }
