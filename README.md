@@ -1,5 +1,5 @@
 # SolarMaxPVOutput
-A java (Spring CLI) based tool to monitor a single SolarMax inverter and upload the statistics to PVOutput
+A java (Spring CLI) based tool to monitor a single SolarMax inverter and a single SMA inverter and upload the statistics to PVOutput
 
 **How to build**
 
@@ -13,7 +13,6 @@ Copy the jar to any folder you like. In the same folder add an `application.yml`
 ```yaml
 pvoutput:
   apiKey: <your apikey>
-  systemId: <your system id>
 ```
 
 Go to the designated folder and run (on a machine running java11 or later:
@@ -21,9 +20,18 @@ Go to the designated folder and run (on a machine running java11 or later:
 
 Default the client wil look for the SolarMax inverter on `192.168.1.123:12345` you can override these settings by adding to the `application.yml`
 ```yaml
-solrmax:
+solarmax:
   clientIp: <inverter ip>
   clientPort: <inverter port>
+  pvOutputSystemId: <your system id>
+
+
+  Default the client wil look for the SMA inverter on `http://192.168.1.17` you can override these settings by adding to the `application.yml`
+  ```yaml
+sma:
+  host: <inverter ip>
+  password: <inverter user password>
+  pvOutputSystemId: <your system id>
 ```
 
 Other properties you can override:
@@ -36,9 +44,14 @@ solarmax:
    - UL1
   cron: '0 0/5 6-23 * * *' # the cron for requesting information from the inverter (now every 5 minutes between 6-23)
 
+sma:
+  right: (usr/istl)
+  cron: '0 0/5 6-23 * * *' # the cron for requesting information from the inverter (now every 5 minutes between 6-23)
+
+
 pvoutput:
   host: https://pvoutput.org
-  cron: '5 0/2 6-23 * * *' # the cron for sendin information to pvoutput (now every 2 minutes between 6-23)
+  cron: '5 0/1 6-23 * * *' # the cron for sendin information to pvoutput (now every 2 minutes between 6-23)
 
 logging: # logging config
   path: logs # the directory relative to the 'root' of the application 
