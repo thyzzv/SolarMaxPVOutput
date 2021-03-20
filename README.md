@@ -24,10 +24,10 @@ solarmax:
   clientIp: <inverter ip>
   clientPort: <inverter port>
   pvOutputSystemId: <your system id>
+```
 
-
-  Default the client wil look for the SMA inverter on `http://192.168.1.17` you can override these settings by adding to the `application.yml`
-  ```yaml
+Default the client wil look for the SMA inverter on `http://192.168.1.17` you can override these settings by adding to the `application.yml`
+```yaml
 sma:
   host: <inverter ip>
   password: <inverter user password>
