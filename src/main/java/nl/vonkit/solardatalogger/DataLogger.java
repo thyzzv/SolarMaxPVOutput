@@ -38,7 +38,7 @@ public class DataLogger {
         log.info("Starting request Solarmax");
 
         CompletableFuture.supplyAsync(solarMaxClient::request, executor)
-                .orTimeout(10, TimeUnit.SECONDS)
+                .orTimeout(20, TimeUnit.SECONDS)
                 .whenComplete((response, error) -> {
                     if (error == null) {
                         log.info("Got response: {}", response);
@@ -56,7 +56,7 @@ public class DataLogger {
         log.info("Starting request SMA");
 
         CompletableFuture.supplyAsync(smaClient::request, executor)
-                .orTimeout(10, TimeUnit.SECONDS)
+                .orTimeout(20, TimeUnit.SECONDS)
                 .whenComplete((response, error) -> {
                     if (error == null) {
                         log.info("Got response: {}", response);
